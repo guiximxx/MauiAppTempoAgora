@@ -5,8 +5,6 @@ namespace MauiAppTempoAgora
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
-
         public MainPage()
         {
             InitializeComponent();
@@ -22,30 +20,31 @@ namespace MauiAppTempoAgora
 
                     if (t != null)
                     {
-                        string dados_previsao = "";
+                        // Parte 1: Adicionados os campos description, speed e visibility na string de exibição
+                        // A visibilidade vem em metros (ex: 10000 m = 10 km)
+                        double visibilidadeKm = (t.visibility ?? 0) / 1000.0;
 
-                        dados_previsao = $"Latitude: {t.lat} \n" +
-                                         $"Longitude: {t.lon} \n" +
-                                         $"Nascer do Sol: {t.sunrise} \n" +
-                                         $"Por do Sol: {t.sunset} \n" +
-                                         $"Temp Máx: {t.temp_max} \n" +
-                                         $"Temp Min: {t.temp_min} \n";
+                        string dados_previsao = $"Descrição: {t.description} \n" +
+                                                 $"Vento: {t.speed} m/s \n" +
+                                                 $"Visibilidade: {visibilidadeKm:F1} km \n" +
+                                                 $"Latitude: {t.lat} \n" +
+                                                 $"Longitude: {t.lon} \n" +
+                                                 $"Nascer do Sol: {t.sunrise} \n" +
+                                                 $"Por do Sol: {t.sunset} \n" +
+                                                 $"Temp Máx: {t.temp_max}°C \n" +
+                                                 $"Temp Min: {t.temp_min}°C \n";
 
                         lbl_res.Text = dados_previsao;
-
                     }
                     else
                     {
-
                         lbl_res.Text = "Sem dados de Previsão";
                     }
-
                 }
                 else
                 {
                     lbl_res.Text = "Preencha a cidade.";
                 }
-
             }
             catch (Exception ex)
             {
@@ -53,5 +52,4 @@ namespace MauiAppTempoAgora
             }
         }
     }
-
 }
